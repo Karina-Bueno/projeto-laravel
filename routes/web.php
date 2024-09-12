@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\Autenticador;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
 use App\Http\Controllers\SeasonsController;
@@ -19,7 +20,7 @@ use App\Http\Controllers\EpisodesController;
 
 Route::get('/', function () {
     return redirect('/series');
-});
+})->middleware(Autenticador::class);
 
 Route::resource('/series', SeriesController::class)
     ->except(['show']);

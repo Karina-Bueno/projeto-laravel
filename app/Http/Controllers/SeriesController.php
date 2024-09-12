@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
-use App\Repositories\SeriesRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\SeriesRepository;
+use App\Http\Requests\SeriesFormRequest;
 
 class SeriesController extends Controller
 {
@@ -15,6 +16,7 @@ class SeriesController extends Controller
 
     public function index(Request $request)
     {
+        Auth::check();
         $series = Series::all();
         $mensagemSucesso = session('mensagem.sucesso');
 

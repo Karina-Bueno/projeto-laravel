@@ -20,6 +20,6 @@ class Episode extends Model
     {
         return $this->episodes 
             ->filter(fn ($episode) => $episode->watched)
-            ->count();
+            ->count(); // dos episódios dessa temporada, vamos filtrar para pegar somente os assistidos e retornar a contagem
     }
 }
