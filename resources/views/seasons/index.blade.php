@@ -8,7 +8,7 @@
                 </a>
 
                 <span class="badge bg-secondary">
-                    {{ $season->episodes->count() }}
+                     {{ $season->numberOfWatchedEpisodes() }} / {{ $season->episodes->count() }} {{--//estamos fazendo um filtro para retornarmos somente os episodios que foram assistidos e desse episodios estamos fazendo a contagem --}}
                 </span>
             </li>
         @endforeach
