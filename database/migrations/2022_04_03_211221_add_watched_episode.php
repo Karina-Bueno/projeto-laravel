@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('episodes', function (Blueprint $table) {
-            $table->boolean('watched')->default(false); //estamos informando para o prórpio banco de dados que por padrão essa coluna tem um valor falso, ou seja o episodio não foi assistido.
+            $table->boolean('watched')->default(false);
         });
     }
 

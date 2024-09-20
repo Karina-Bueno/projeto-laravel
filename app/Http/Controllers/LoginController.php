@@ -14,7 +14,7 @@ class LoginController
 
     public function store(Request $request)
     {
-        if (!Auth::attempt($request->all(['email', 'password']))) {
+        if (!Auth::attempt($request->only(['email', 'password']))) {
             return redirect()->back()->withErrors('Usuário ou senha inválidos');
         }
 

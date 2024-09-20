@@ -16,9 +16,12 @@ class UsersController
 
     public function store(Request $request)
     {
-        if (!Auth::attempt($request->only(['email', 'password']))) {
-        return redirect()->back()->withErrors('Usuário ou senha inválidos');
-        }
-            return to_route('series.index');
+        $data = $request->except(['_token']);
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
+        Auth::login($user);
+
+        return to_route('series.index');
     }
 }
