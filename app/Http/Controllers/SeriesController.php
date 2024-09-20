@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Series;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Repositories\SeriesRepository;
 use App\Http\Requests\SeriesFormRequest;
+use App\Models\Series;
+use App\Repositories\SeriesRepository;
+use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
     public function __construct(private SeriesRepository $repository)
     {
+        $this->middleware('auth')->except('index');
     }
 
     public function index(Request $request)
     {
-        Auth::check();
         $series = Series::all();
         $mensagemSucesso = session('mensagem.sucesso');
 
