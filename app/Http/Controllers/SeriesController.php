@@ -34,7 +34,10 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        dd($request->file('cover'));
+        $coverPath = $request->hasFile('cover') //se existir a imagem
+            ? $request->file('cover')->store('series_cover', 'public') //armazena e retorna o caminho
+            :null; //se não é um valor nulo
+        $request->coverPath = $coverPath;
         $serie = $this->repository->add($request); //avisando que a série foi criada 
         SeriesCreated::dispatch(
             $serie->nome,
