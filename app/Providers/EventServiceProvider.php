@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SeriesCreated::class => [
+            EmailUsersAboutSeriesCreated::class, //sempre que a serie for criada o listener EmailUsersAboutSeriesCreated será executado
+            LogSeriesCreated::class,  
+        ],
     ];
 
     /**
