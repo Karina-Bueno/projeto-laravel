@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Series;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\SeriesRepository;
 use App\Http\Requests\SeriesFormRequest;
@@ -13,9 +14,13 @@ class SeriesController extends Controller
     {
 
     }
-    public function index()
+    public function index(Request $request)
     {
-        return Series::all();
+        $query = Series::query();
+        if ($request->has('nome')) {
+            $query->where('nome', $request->nome);
+        }
+        return $query->paginate(5);
     }
 
     public function store(SeriesFormRequest $request)
