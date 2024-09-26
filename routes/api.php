@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\User;
 use App\Models\Series;
 use App\Models\Episode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SeriesController;
 
@@ -35,4 +37,16 @@ Route::patch('/episodes/{episode}', function (Episode $episode, Request $request
     $episode->save();
 
     return $episode;
+});
+
+Route::post('/login', function (Request $request) {
+    $credentials = $request->only(['email', 'password']);
+    if (Auth::attempt($credentials) === false) {
+        return response()->json('Unauthorized', 401);
+    }
+    $user = Auth::user();
+    $user->tokens()->delete();
+    $token = $user->createToken('token', ['series:delete']);
+
+    return response()->json($token->plainTextToken);
 });

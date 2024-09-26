@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Series;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Laravel\Sanctum\HasApiTokens;
 use App\Http\Controllers\Controller;
 use App\Repositories\SeriesRepository;
 use App\Http\Requests\SeriesFormRequest;
@@ -48,9 +50,18 @@ class SeriesController extends Controller
         return $series;
     }
 
-    public function destroy(Series $series)
+    public function destroy(int $series): JsonResponse
     {
+        $user = auth()->user();
+        
+        if (!$user || !$user->tokenCan('series:delete')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
         Series::destroy($series);
+
         return response()->noContent();
+        // $user->tokenCan('series:delete');
+        // Series::destroy($series);
+        // return response()->noContent();
     }
 }
